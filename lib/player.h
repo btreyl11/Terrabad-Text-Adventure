@@ -41,7 +41,7 @@ class Player
 		bool equip_armor(Armor a);
 		bool equip_weapon(Weapon w);
 		
-		bool basic_attack()=0;
+		bool basic_attack(Player p)=0;
 		
 };
 class Warrior : Player {
@@ -49,9 +49,13 @@ class Warrior : Player {
 		int rage;
 	public:
 		Warrior();
-		bool basic_attack();
+		bool basic_attack(Player p);
 		bool shield_bash();
 		bool slash();
+	
+		const int rage();
+		void dec_rage();
+		void inc_rage(const int r);
 };
 class Theif : Player {
 	private:

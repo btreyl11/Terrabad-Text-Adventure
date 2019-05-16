@@ -96,6 +96,7 @@ Warrior::Warrior(): rage(100)
 {
 	Player();
 }
-bool Warrior::basic_attack(){
-	
+bool Warrior::basic_attack(Player p){
+	inc_rage(10);
+	p.health -= 10+(5*m_level) + weapons.first.dmg + weapons.second.dmg;
 }
