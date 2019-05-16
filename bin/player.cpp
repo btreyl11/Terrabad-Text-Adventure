@@ -1,19 +1,21 @@
-#include "Player.h"
+#include <vector>
+#include <utility>
+#include "../lib/player.h"
 #define HEAD 0
 #define SHOULDERS 1
 #define CHEST 2
 #define HANDS 3
 #define FEET 4
 Player::Player(): m_health(100), m_xp(0), m_max_health(100), m_to_next_level(1000), m_level(1){
-	inventory.resize(9);
-	equipment[HEAD].empty = true;
-	equipment[SHOULDERS].empty = true;
-	equipment[CHEST].empty = true;
-	equipment[HANDS].empty = true;
-	equipment[FEET].empty = true;
+	m_inventory.resize(9);
+	m_equipped[HEAD].set_empty(true);
+	m_equipped[SHOULDERS].set_empty(true);
+	m_equipped[CHEST].set_empty(true);
+	m_equipped[HANDS].set_empty(true);
+	m_equipped[FEET].set_empty(true);
 	
-	weapons.first.empty = true;
-	weapons.second.empty = true;
+	m_weapons.first.set_empty(true);
+	m_weapons.second.set_empty(true);
 }
 
 const int Player::health()
@@ -23,7 +25,7 @@ const int Player::health()
 }
 const string Player::name()
 {
-	return m_name
+	return m_name;
 }
 const int Player::max_health()
 {
@@ -42,12 +44,14 @@ const float Player::to_next_level()
 	return m_to_next_level;
 }
 const vector<Item> Player::inventory(){
-	return inventory;
+	return m_inventory;
 }
-const Armor[] Player::equipment(){
-	return equipment;
+const Equipment Player::equipped(const int loc){
+	return m_equipped[loc];
 }
-const 
+const pair<Weapon, Weapon> Player::weapons(){
+	return m_weapons;
+}
 
 void Player::set_level(const int lvl)
 {
@@ -57,8 +61,8 @@ void Player::set_xp(const float xp)
 {
 	m_xp = xp;
 	if(m_xp >= m_to_next_level){
-		m_level++
-		this.incr_to_next_level();	
+		m_level++;
+		this->incr_to_next_level();	
 	}
 }
 void Player::set_to_next_level(const float nlvl){
@@ -83,20 +87,30 @@ void Player::incr_xp(const float xp){
 	m_xp += xp;
 	if(m_xp >= m_to_next_level){
 		m_level++;
-		this.incr_to_next_level();
+		this->incr_to_next_level();
 	}
 }
 void Player::incr_to_next_level(){
 	m_to_next_level = m_to_next_level*2.5;
 }
 bool Player::pick_up_item(Item i){
-	
+	return true;
 }
-Warrior::Warrior(): rage(100)
+bool Player::basic_attack(Player* p){
+
+	p->incr_health(-10);
+}
+Warrior::Warrior(): m_rage(0)
 {
 	Player();
 }
-bool Warrior::basic_attack(Player p){
+const int Warrior::rage(){
+	return m_rage;
+}
+void Warrior::inc_rage(int r){
+	m_rage += r;
+}
+bool Warrior::basic_attack(Player* p){
 	inc_rage(10);
-	p.health -= 10+(5*m_level) + weapons.first.dmg + weapons.second.dmg;
+	p->incr_health(-10);
 }

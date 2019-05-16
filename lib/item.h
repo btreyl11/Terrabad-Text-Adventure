@@ -1,4 +1,4 @@
-#include "pl ayer.h"
+#include "player.h"
 #ifndef ITEM_H
 #define ITEM_H
 enum IType { ARMOR, CONSUMABLE};
@@ -21,19 +21,21 @@ class Item {
 	
 };
 
-class Equipment : Item {
+class Equipment : public Item {
 	private:
-		int armor;
+		int m_armor;
 	public:
 		Equipment();
+		
+		const int armor();
 }; 
-class Weapon : Item {
+class Weapon : public Item {
 	private:
-		int dmg;
+		int m_dmg;
 	public:
 		Weapon();
 		
 		const int dmg();
-}
+};
 
 #endif

@@ -1,18 +1,22 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-using namepace std;
+#include <vector>
+#include <utility>
+#include <string>
+#include "item.h"
+using namespace std;
 class Player
 {
 	protected:
 		int m_health;
 		int m_max_health;
-		string m_name;
+		std::string m_name;
 		int m_level;
 		float m_xp;
 		float m_to_next_level;
-		vector<Item> inventory;
-		Armor equipment[5];
-		pair<Weapon> weapons;
+		vector<Item> m_inventory;
+		Equipment m_equipped[5];
+		pair<Weapon,Weapon> m_weapons;
 	public:
 		Player();
 		
@@ -23,8 +27,8 @@ class Player
 		const float xp();
 		const float to_next_level();
 		const vector<Item> inventory();
-		const Armor[] equipment();
-		const pair<Weapon> weapons();
+		const Equipment equipped(const int loc);
+		const pair<Weapon,Weapon> weapons();
 		
 		void set_level(const int lvl);
 		void set_xp(const float xp);
@@ -38,26 +42,26 @@ class Player
 		void incr_to_next_level();
 		
 		bool pick_up_item(Item i);
-		bool equip_armor(Armor a);
+		bool equip_armor(Equipment a);
 		bool equip_weapon(Weapon w);
 		
-		bool basic_attack(Player p)=0;
+		bool basic_attack(Player* p);
 		
 };
-class Warrior : Player {
+class Warrior: public Player {
 	private:
-		int rage;
+		int m_rage;
 	public:
 		Warrior();
-		bool basic_attack(Player p);
 		bool shield_bash();
 		bool slash();
 	
 		const int rage();
 		void dec_rage();
 		void inc_rage(const int r);
+		bool basic_attack(Player* p);
 };
-class Theif : Player {
+class Theif: public Player {
 	private:
 		int energy;
 	public:

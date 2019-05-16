@@ -22,13 +22,16 @@ void Item::set_empty(const bool e){
 	m_empty = e;
 }
 
-Equipment::Equipment(): armor(10) {
+Equipment::Equipment(): m_armor(10) {
 	Item();
 }
-Weapon::Weapon() : dmg(10) {
+const int Equipment::armor(){
+	return m_armor;
+}
+Weapon::Weapon() : m_dmg(10) {
 	Item();
 }
 const int Weapon::dmg(){
-	return dmg;
+	return m_dmg;
 }
 
